@@ -1,0 +1,27 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #333;
+}
+header {
+  color: #fff;
+  margin-bottom: 20px;
+  margin: 0;
+}
+
+/* テーブル全体の外枠を3pxの二重線（double）にする */
+table {
+  width: 100%;
+  border: 3px solid #000; /* 外枠：太さ3pxの二重線 */
+  margin-bottom: 15px;
+}
+
+/* 各セル（th, td）の境界線を1pxまたは2pxの実線（solid）にする */
+th,
+td {
+  border: 3px solid #000; /* セルの境界線：太さ1pxの実線 */
+  margin-bottom: 10px;
+  /*インライン・ブロック要素（img,span,input,th,td）の「垂直方向（上下の位置）」の中央揃えを行うプロパティ */
+  vertical-align: middle;
+}
