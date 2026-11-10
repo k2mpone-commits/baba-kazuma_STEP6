@@ -1,9 +1,8 @@
 <?php
 $errors = [];
-// 初回アクセス時に $post が未定義になるのを防ぐため、空の配列をデフォルトで用意する
 $post = [
     'name' => '',
-    'company-name' => '',
+    'companyName' => '',
     'email' => '',
     'age' => '',
     'message' => ''
@@ -11,17 +10,14 @@ $post = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $post = filter_input_array(INPUT_POST, $_POST);
-  // フォームの送信エラーをチェックする処理
   if (empty($post['name'])) {
     $errors['name'] = 'blank';
   }
-  if (empty($post['company-name'])) {
-    $errors['company-name'] = 'blank';
+  if (empty($post['companyName'])) {
+    $errors['companyName'] = 'blank';
   }
   if (empty($post['email'])) {
     $errors['email'] = 'blank';
-  } else if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = 'email';
   }
   if (empty($post['age'])) {
     $errors['age'] = 'blank';
@@ -29,15 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (empty($post['message'])) {
     $errors['message'] = 'blank';
   }
-
-  if(count($errors) === 0) {
-    // エラーがない場合、確認画面（confirm.php）へリダイレクト
-    header('Location: confirm.php');
-    exit;
-  }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -47,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 修正: headeer のタイポを header に修正 -->
   <header>
     <h2>お問い合わせフォーム</h2>
   </header>
@@ -63,8 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
   </aside>
   <main>
-    <!-- 確認画面（confirm.php）へPOSTメソッドでデータを送信するフォーム -->
-    <form action="contact.php" method="post" novalidate>
+    <form action="confirm.php" method="post" novalidate>
       <table>
         <tr>
           <th>お名前</th>
@@ -78,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <tr>
           <th>会社名</th>
           <td>
-            <input type="text" id="company-name" name="company-name" value="<?php echo htmlspecialchars($post['company-name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if (!empty($errors['company-name']) && $errors['company-name'] === 'blank'): ?>
+            <input type="text" id="companyName" name="companyName" value="<?php echo htmlspecialchars($post['companyName'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+            <?php if (!empty($errors['companyName']) && $errors['companyName'] === 'blank'): ?>
               <p class="error-msg">※会社名を入力してください</p>
             <?php endif; ?>
           </td>
@@ -105,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <tr>
           <th>お問い合わせ内容</th>
           <td>
-            <textarea name="message" rows="5" required><?php echo htmlspecialchars($post['message'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+            <textarea id="message" name="message" rows="5"><?php echo htmlspecialchars($post['message'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
             <?php if (!empty($errors['message']) && $errors['message'] === 'blank'): ?>
               <p class="error-msg">※お問い合わせ内容を入力してください</p>
             <?php endif; ?>
@@ -113,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tr>
       </table>
 
-      <!--送信ボタン-->
       <p>
         <input type="submit" value="送信">
       </p>
@@ -124,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p>横のボタンを押すとfooterの背景色が変わります。</p>
     <button type="button">押してみてね！</button>
   </footer>
-  <!-- script（背景色変更などの制御用）-->
+
   <script src="style.js"></script>
 </body>
 </html>

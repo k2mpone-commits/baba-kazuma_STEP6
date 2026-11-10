@@ -1,13 +1,30 @@
+<?php
+// POSTメソッド以外でアクセスされた場合は contact.php にリダイレクト
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: contact.php');
+    exit;
+}
+
+$post = filter_input_array(INPUT_POST, $_POST);
+
+// データの受け取りとエスケープ処理
+$name = $post['name'] ?? '';
+$companyName = $post['companyName'] ?? '';
+$email = $post['email'] ?? '';
+$age = $post['age'] ?? '';
+$message = $post['message'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>お問合せフォーム-確認画面</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-    <h2>お問い合わせフォーム</h2>
+  <header>
+    <h2>お問合せフォーム-確認画面</h2>
   </header>
   <aside>
     <nav>
@@ -21,67 +38,43 @@
     </nav>
   </aside>
   <main>
-    <!-- 確認画面（confirm.php）へPOSTメソッドでデータを送信するフォーム -->
-    <form action="contact.php" method="post" novalidate>
+    <form action="send.php" method="post">
+      <!-- 次の画面（send.php）へデータを引き渡すためのhiddenフィールド -->
+      <input type="hidden" name="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="companyName" value="<?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="age" value="<?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="message" value="<?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>">
+
       <table>
         <tr>
           <th>お名前</th>
-          <td>
-            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($post['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if (!empty($errors['name']) && $errors['name'] === 'blank'): ?>
-              <p class="error-msg">※お名前を入力してください</p>
-            <?php endif; ?>
-          </td>
+          <td><?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></td>
         </tr>
         <tr>
           <th>会社名</th>
-          <td>
-            <input type="text" id="company-name" name="company-name" value="<?php echo htmlspecialchars($post['company-name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if (!empty($errors['company-name']) && $errors['company-name'] === 'blank'): ?>
-              <p class="error-msg">※会社名を入力してください</p>
-            <?php endif; ?>
-          </td>
+          <td><?php echo htmlspecialchars($companyName, ENT_QUOTES, 'UTF-8'); ?></td>
         </tr>
         <tr>
           <th>メールアドレス</th>
-          <td>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($post['email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if (!empty($errors['email']) && $errors['email'] === 'blank'): ?>
-              <p class="error-msg">※メールアドレスを入力してください</p>
-            <?php endif; ?>
-          </td>
+          <td><?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?></td>
         </tr>
         <tr>
           <th>年齢</th>
-          <td>
-            <input type="text" id="age" name="age" value="<?php echo htmlspecialchars($post['age'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if (!empty($errors['age']) && $errors['age'] === 'blank'): ?>
-              <p class="error-msg">※年齢を入力してください</p>
-            <?php endif; ?>
-          </td>
+          <td><?php echo htmlspecialchars($age, ENT_QUOTES, 'UTF-8'); ?></td>
         </tr>
         <tr>
           <th>お問い合わせ内容</th>
-          <td>
-            <textarea name="message" rows="5" required><?php echo htmlspecialchars($post['message'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
-            <?php if (!empty($errors['message']) && $errors['message'] === 'blank'): ?>
-              <p class="error-msg">※お問い合わせ内容を入力してください</p>
-            <?php endif; ?>
-          </td>
+          <td><?php echo nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')); ?></td>
         </tr>
       </table>
 
-      <!--送信ボタン-->
       <p>
         <input type="submit" value="送信">
+        <!-- 戻るボタンは history.back を指定 -->
+        <input type="button" value="戻る" onclick="history.back();">
       </p>
     </form>
   </main>
-
-  <footer>
-    <p>横のボタンを押すとfooterの背景色が変わります。</p>
-    <button type="button">押してみてね！</button>
-  </footer>
-
 </body>
 </html>
