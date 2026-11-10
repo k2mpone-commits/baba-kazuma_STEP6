@@ -10,23 +10,25 @@ $post = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $post = filter_input_array(INPUT_POST, $_POST);
-  if (empty($post['name'])) {
+
+  if (trim($post['name'] ?? '') === '') {
     $errors['name'] = 'blank';
   }
-  if (empty($post['companyName'])) {
+  if (trim($post['companyName'] ?? '') === '') {
     $errors['companyName'] = 'blank';
   }
-  if (empty($post['email'])) {
+  if (trim($post['email'] ?? '') === '') {
     $errors['email'] = 'blank';
   }
-  if (empty($post['age'])) {
+  if (trim($post['age'] ?? '') === '') {
     $errors['age'] = 'blank';
   }
-  if (empty($post['message'])) {
+  if (trim($post['message'] ?? '') === '') {
     $errors['message'] = 'blank';
   }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
