@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $post = filter_input_array(INPUT_POST, $_POST);
 
-// データの受け取りとエスケープ処理
 $name = $post['name'] ?? '';
 $companyName = $post['companyName'] ?? '';
 $email = $post['email'] ?? '';
@@ -23,9 +22,12 @@ $message = $post['message'] ?? '';
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- ① headerタグはページの最上部に配置 -->
   <header>
     <h2>お問合せフォーム-確認画面</h2>
   </header>
+
+  <!-- ② asideタグ（サイドバー）は main の外、または横並びにする位置に配置 -->
   <aside>
     <nav>
       <ul>
@@ -37,6 +39,8 @@ $message = $post['message'] ?? '';
       </ul>
     </nav>
   </aside>
+
+  <!-- ③ メインコンテンツ（テーブルやフォーム）は <main> の中に入れる -->
   <main>
     <form action="send.php" method="post">
       <!-- 次の画面（send.php）へデータを引き渡すためのhiddenフィールド -->
@@ -69,10 +73,11 @@ $message = $post['message'] ?? '';
         </tr>
       </table>
 
+      <!-- ボタンの配置：仕様書のイメージ画像に合わせて右側に置く場合などのブロック -->
       <p>
-        <input type="submit" value="送信">
         <!-- 戻るボタンは history.back を指定 -->
         <input type="button" value="戻る" onclick="history.back();">
+        <input type="submit" value="送信">
       </p>
     </form>
   </main>

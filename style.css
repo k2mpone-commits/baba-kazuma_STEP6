@@ -1,27 +1,151 @@
+/* ==========================================
+   1. ページ全体の基本設定
+   ========================================== */
 body {
-  background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
-  margin: 0;
+  font-family: sans-serif;
+  margin: 20px;
   color: #333;
-}
-header {
-  color: #151414;
-  margin-bottom: 20px;
-  margin: 0;
+  line-height: 1.5;
 }
 
-/* テーブル全体の外枠を3pxの二重線（double）にする */
-table {
-  width: 100%;
-  border: 3px solid #000; /* 外枠：太さ3pxの二重線 */
+/* ==========================================
+   2. ヘッダー・サイドバー（ナビゲーション）
+   ========================================== */
+header {
   margin-bottom: 15px;
 }
 
-/* 各セル（th, td）の境界線を1pxまたは2pxの実線（solid）にする */
+header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+aside {
+  margin-bottom: 20px;
+}
+
+aside ul {
+  padding-left: 20px;
+  margin: 5px 0;
+}
+
+aside li {
+  margin-bottom: 4px;
+}
+
+aside a {
+  color: #0066cc;
+  text-decoration: underline;
+}
+
+/* ==========================================
+   3. テーブル（枠線・セルの調整）
+   ========================================== */
+table {
+  width: 100%;
+  border-collapse: separate; /* 二重線を綺麗に表示するため */
+  border-spacing: 0; /* セル間の隙間をなくす */
+  border: 3px double #000; /* 外枠：太さ3pxの二重線 */
+  margin-bottom: 15px;
+}
+
 th,
 td {
-  border: 3px solid #000; /* セルの境界線：太さ1pxの実線 */
-  margin-bottom: 10px;
-  /*インライン・ブロック要素（img,span,input,th,td）の「垂直方向（上下の位置）」の中央揃えを行うプロパティ */
-  vertical-align: middle;
+  border: 1px solid #000; /* 内側のセル境界線 */
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: middle; /* 縦方向の中央揃え */
+}
+
+th {
+  background-color: #f4f4f4;
+  white-space: nowrap;
+  width: 180px;
+}
+
+/* ==========================================
+   4. 入力欄（テキストボックス・テキストエリア）
+   ========================================== */
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  width: 40ch; /* 半角40文字分の幅 */
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 40ch; /* 半角40文字分の幅 */
+  height: 6em;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+/* エラーメッセージのスタイル */
+.error-msg {
+  color: red;
+  font-size: 0.85rem;
+  margin: 4px 0 0 0;
+}
+
+/* ==========================================
+   5. ボタン・フッター
+   ========================================== */
+input[type="submit"],
+input[type="button"],
+button {
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  transition: background-color 0.3s ease; /* 背景色変更時のアニメーション */
+}
+
+footer p {
+  margin: 0 0 8px 0;
+}
+
+/* ==========================================
+   確認画面（confirm.php）専用のレイアウト・ボタンスタイル
+   ========================================== */
+
+/* 確認画面のテーブル内の文字や余白の調整 */
+.confirm-table th,
+.confirm-table td {
+    padding: 8px 12px;
+    vertical-align: middle;
+}
+
+/* 戻るボタンと送信ボタンを並べて配置するためのスタイル */
+.button-group {
+    display: flex;
+    gap: 10px; /* ボタン同士の隙間 */
+    margin-top: 15px;
+}
+
+/* 戻るボタン（input[type="button"] または通常のボタン） */
+input[type="button"] {
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="button"]:hover {
+    background-color: #e2e2e2;
+}
+
+/* 送信ボタンのスタイル調整 */
+input[type="submit"] {
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 1rem;
 }
